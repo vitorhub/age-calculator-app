@@ -1,49 +1,69 @@
-export default function validateDate(date: any){
-    
-    let dateformat = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[1-2][0-9]|3[01])[\/]\d{4}$/;
+export default function valDate(dateString: string) {
 
-    let result: any = []
-    
-    // Matching the date through regular expression      
-    if (date.match(dateformat)) { /* verifica formato da data pelo regex */
-        let operator = date.split('/');
+    console.log(dateString + "-----")
+    let resposta = ''
+    let respostaAno: string | number = 'ANO CORRETO'
+    let respostaMes: string | number = 'MES CORRETO'
+    let respostaDia: string | number = 'DIA CORRETO'
+    let array: [string | number, string | number, string | number] =
+        [respostaDia, respostaMes, respostaAno]
 
-        // Extract the string into month, date and year      
-        let datepart = [];
-        if (operator.length > 1) {
-            datepart = date.split('/');
-        }
-        let month = parseInt(datepart[0]);
-        let day = parseInt(datepart[1]);
-        let year = parseInt(datepart[2]);
+    // Parse the date parts to integers
+    var parts = dateString.split("/");
+    var dia = parseInt(parts[0], 10);
+    var mes = parseInt(parts[1], 10);
+    var ano = parseInt(parts[2], 10);
+    console.log(mes + "*"+ dia + "*" + ano )
 
-        // Create a list of days of a month      
-        let ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        if (month == 1 || month > 2) { /* nao é fevereiro */
-            if (day > ListofDays[month - 1]) {
-                //to check if the date is out of range SE É MAIOR QUE O PERMITIDO NAO SENDO FEVEREIRO  
-                result.push("dia muito alto L25");
-                return false; /* aki return false  */
-            }
-        } else if (month == 2) { /* É FEVEREIRO */
-            let leapYear = false; /* NAO É BISEXTO */
-            if ((!(year % 4) && year % 100) || !(year % 400)) {
-                result.push("é bisexto"); /* aki É BISEXTO */
-                leapYear = true;
-            }
-            if ((leapYear == false) && (day >= 29)) {
-                result.push("nao é bisexto e dia é 29");
-                return false; /* NAO É BISEXTO */
-            }
-            else if ((leapYear == true) && (day > 29)) { /* é ano bisexto */
-                    console.log('Invalid date format!');
-                    result.push("é bisexto mas o dia é maior que 29");
-                    return false;
+    if (ano < 1923 || ano > 2023 || isNaN(ano)) {
+        array[2] = "Max 100" ;
+    } else {
+        array[2] = "ANO OK";
+    }
+
+    if (mes < 1 || mes > 12 || isNaN(mes)) {
+        array[1] = "MES ERRADO ou NaN"
+    } else if (dia < 1 || isNaN(dia)) {
+        array[0] = "dia menor que 1 ou NaN"
+    } else {
+        switch (mes) {
+            case 1: case 3: case 5: case 7:
+            case 8: case 10: case 12:
+                if (dia <= 31) {
+                    resposta = "Data válida mes com 31 dias";
+                } else {
+                    resposta = "L:36 Max day 31";
+                    array[0] = "L:37 Max day 31";
+                }
+                break;
+            case 4: case 6:
+            case 9: case 11:
+                if (dia <= 30) {
+                    resposta = "L:30 Data válida";
+                } else {
+                    resposta = "L:43 Max day 30";
+                    array[0] = "L:44 Max day 30";
+                }
+                break;
+            case 2:
+                if ((ano % 400 == 0) || (ano % 4 == 0 && ano % 100 != 0)) {
+                    if (dia <= 29) {
+                        resposta = "Data válida é bisexto";
+                    } else {
+                        resposta = "L:52 Max day 29";
+                        array[0] = "L:53 Max day 29";
+                    }
+                }
+                else {
+                    if (dia <= 28) {
+                        resposta = "Data válida ano comum";
+                    } else {
+                        resposta = "L:59 Max day 28";
+                        array[0] = "L:60 Max day 28";
+                    }
                 }
         }
-    } else { /* formato regex para data invalido */
-        console.log("Invalid date format!");
-        return result; /* false por result */
+        return array
     }
-    return "data correta"; /* valid date por result */
+
 }

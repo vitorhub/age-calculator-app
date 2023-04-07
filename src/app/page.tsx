@@ -6,8 +6,8 @@ import styles from './page.module.css'
 import * as Yup from 'yup';
 
 import React from 'react';
- import { Formik, Form, Field, ErrorMessage } from 'formik';
- import validateDate from './functions/validateDate';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import valDate from './functions/validateDate';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,35 +15,38 @@ export default function Home() {
   return (
     <>
       <Formik
-       initialValues ={{ day: '', month: '', year: '', date: "32/09/2022" }}
-       validate={values => {
-         const errors = { email: ""}; // atribuição
-         const resultado = validateDate(values.date)
-         console.log(resultado)
-         if (!values.day) { errors.email = 'Day required'; }
-         return errors;
-       }}
-       onSubmit={(values, { setSubmitting }) => {
-         setTimeout(() => {
-           alert(JSON.stringify(values, null, 2));
-           setSubmitting(false);
-         }, 400);
-       }}
-     >
-       {
-       () => (
-         <Form>
-           <Field type="email" name="email" />
-           <ErrorMessage name="email" component="div" />
-           <Field type="password" name="password" />
-           <ErrorMessage name="password" component="div" />
-           <button type="submit">
-             Submit
-           </button>
-         </Form>
-       )
-       }
-     </Formik>   
+        initialValues={{ dia: '', mes: '', ano: '', date: "30/09/1900" }}
+        validate={values => {
+          const junta = { concat: `${values.dia}/${values.mes}/${values.ano}` };
+          const resultado = valDate(junta.concat)
+          console.log(resultado + "@@")
+          const errors = { dia: ``, mes: ``, ano: `` }; // atribuição
+          if (!values.dia) { errors.dia = 'Falta dia'; }
+          return errors;
+        }}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        {
+          () => (
+            <Form>
+              <Field type="number" name="dia" />
+              <ErrorMessage name="dia" component="div" />
+              <Field type="number" name="mes" />
+              <ErrorMessage name="mes" component="div" />
+              <Field type="number" name="ano" />
+              <ErrorMessage name="ano" component="div" />
+              <button type="submit">
+                Submit
+              </button>
+            </Form>
+          )
+        }
+      </Formik>
     </>
   )
 }
