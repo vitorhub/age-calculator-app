@@ -12,10 +12,9 @@ export default function valDate(dateString: string) {
     var dia = parseInt(parts[0], 10);
     var mes = parseInt(parts[1], 10);
     var ano = parseInt(parts[2], 10);
-    console.log(dia + "*" + mes + "*" + ano)
 
     if (ano < 1923 || ano > 2023 || isNaN(ano)) {
-        array[2] = "Max 100 ou invalido"; console.log("aki")
+        array[2] = "Max 100 ou invalido";
     } else {
         array[2] = "OK";
     }
