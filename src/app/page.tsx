@@ -1,16 +1,15 @@
 "use client"
 import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
+import arrow from '/icon-arrow.svg'
+import './page.module.css'
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import valDate from './functions/validateDate';
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [anos , setAnos ] = useState<string | number>("-");
-  const [meses , setMeses ] = useState<string | number>("-");
-  const [dias , setDias ] = useState<string | number>("-");
+  const [anos , setAnos ] = useState<string | number>("- -");
+  const [meses , setMeses ] = useState<string | number>("- -");
+  const [dias , setDias ] = useState<string | number>("- -");
   const [d, setD] = useState<number| string>(0)
   const [m, setM] = useState<number| string>(0)
   const [a, setA] = useState<number| string>(0)
@@ -28,6 +27,8 @@ export default function Home() {
     let meses = calcmes - (anos * 12)
     let dias = today
     setAnos(anos)
+    setMeses(meses)
+    setDias(dias)
   }
 
   function executa(e: any){
@@ -70,8 +71,8 @@ export default function Home() {
                 <label htmlFor="ano">Ano</label>
                 <Field type="number" name="ano" />
                 <ErrorMessage name="ano" component="div" />
-                <button type="submit">
-                  Submit
+                <button type="submit" className='botao'>
+                  <img className='arrow' src="/icon-arrow.svg" alt="arrow" />
                 </button>
               </Form>
             </>
@@ -80,6 +81,8 @@ export default function Home() {
       </Formik>
 
         <h2>{anos} Years</h2>
+        <h2>{meses} Months</h2>
+        <h2>{dias} Days </h2>
     </>
   )
 }
