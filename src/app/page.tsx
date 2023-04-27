@@ -11,6 +11,9 @@ export default function Home() {
   const [anos , setAnos ] = useState<string | number>("-");
   const [meses , setMeses ] = useState<string | number>("-");
   const [dias , setDias ] = useState<string | number>("-");
+  const [d, setD] = useState<number| string>(0)
+  const [m, setM] = useState<number| string>(0)
+  const [a, setA] = useState<number| string>(0)
   
   function exibeResult(dia:any, mes:any, ano:any){
     const hoje = new Date();
@@ -29,7 +32,7 @@ export default function Home() {
 
   function executa(e: any){
     e.preventDefault();
-    exibeResult(27,8,1980)
+    exibeResult(d, m, a);
   }
 
   return (
@@ -39,22 +42,25 @@ export default function Home() {
         validate={values => {
           const junta = { concat: `${values.dia}/${values.mes}/${values.ano}` };
           const resultado = valDate(junta.concat)
-          { exibeResult(values.dia, values.mes, values.ano) }
+          /* { exibeResult(values.dia, values.mes, values.ano) } */
+          setD(values.dia);
+          setM(values.mes);
+          setA(values.ano);
           const errors = { dia: ``, mes: ``, ano: `` };
           if (resultado[0] != "OK") { errors.dia = resultado[0]; }
           if (resultado[1] != "OK") { errors.mes = resultado[1]; }
           if (resultado[2] != "OK") { errors.ano = resultado[2]; }
           return errors;
-        }}
+        }} 
 
         onSubmit={(values)=>{
-          exibeResult(values.dia, values.mes, values.ano)
+          /* aqui supostamente eu pegaria os valores de values */
         }}
       >
         {
           () => (
             <>
-              <Form onSubmit={ e=>executa(e)} >
+              <Form onSubmit={ (e)=> {executa(e)} } >
                 <label htmlFor="dia">Dia</label>
                 <Field type="number" name="dia" />
                 <ErrorMessage name="dia" component="div" />
