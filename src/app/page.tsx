@@ -12,9 +12,9 @@ export default function Home() {
   const [d, setD] = useState<number | string>(0)
   const [m, setM] = useState<number | string>(0)
   const [a, setA] = useState<number | string>(0)
-  const [ dayRed, setDayRed ] = useState(false)
-  const [ monthRed, setMonthRed] = useState(false)
-  const [ yearRed, setYearRed] = useState(false)
+  const [dayRed, setDayRed] = useState(false)
+  const [monthRed, setMonthRed] = useState(false)
+  const [yearRed, setYearRed] = useState(false)
 
   function exibeResult(dia: any, mes: any, ano: any) {
     const hoje = new Date();
@@ -38,13 +38,13 @@ export default function Home() {
     exibeResult(d, m, a);
   }
 
-  function estiliza(){
+  function estiliza() {
     setDayRed(!dayRed)
 
   }
 
   return (
-    <>
+    <div className={styles.container} >
       <Formik
         initialValues={{ dia: '', mes: '', ano: '' }}
         validate={values => {
@@ -54,11 +54,13 @@ export default function Home() {
           setM(values.mes);
           setA(values.ano);
           const errors = { dia: "", mes: "", ano: "" };
-          if (resultado[0] === "OK" || resultado[0] === undefined ) {   setDayRed(false) 
-          }else{ errors.dia = resultado[0];  setDayRed(true)}
-          
-          if (resultado[1] !== "OK") { errors.mes = resultado[1]; 
-          }else{      }
+          if (resultado[0] === "OK" || resultado[0] === undefined) {
+            setDayRed(false)
+          } else { errors.dia = resultado[0]; setDayRed(true) }
+
+          if (resultado[1] !== "OK") {
+            errors.mes = resultado[1];
+          } else { }
           if (resultado[2] !== "OK") { errors.ano = resultado[2]; }
           return errors;
         }}
@@ -73,8 +75,8 @@ export default function Home() {
               <Form onSubmit={(e) => { executa(e) }} id={styles.mainForm} >
                 <div className={styles.campos}>
                   <div className={styles.day}>
-                    <label htmlFor="dia" className={ dayRed ? (styles.mudaLabelDia) : '' }>Dia</label>
-                    <Field type="number" name="dia" className={dayRed ? (styles.mudaInputDia) : styles.mudaInput}/>
+                    <label htmlFor="dia" className={dayRed ? (styles.mudaLabelDia) : ''}>Dia</label>
+                    <Field type="number" name="dia" className={dayRed ? (styles.mudaInputDia) : styles.mudaInput} />
                     <ErrorMessage name="dia" component="div" className={styles.erro} />
                   </div>
                   <div className={styles.month}>
@@ -96,10 +98,12 @@ export default function Home() {
           )
         }
       </Formik>
-      <h2>{anos} Years</h2>
-      <h2>{meses} Months</h2>
-      <h2>{dias} Days </h2>
-    </>
+      <div className={styles.result}>
+        <h2><span>{anos}</span> years</h2>
+        <h2><span>{meses}</span> months</h2>
+        <h2><span>{dias}</span> days </h2>
+      </div>
+    </div>
   )
 }
 // https://mohamed806h.github.io/Age-calculator-app-main/

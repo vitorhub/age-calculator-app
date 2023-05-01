@@ -2,6 +2,9 @@
   display: flex;
   background-color: aqua;
   gap: 10px;
+  width: 90%;
+  height: 20vh;
+  margin: auto;
 }
 #mainForm div div label{
   padding: 5px 10px;
@@ -16,10 +19,11 @@
   display: flex;
   flex-direction: column;
   background-color: yellow;
+  width: 130px;
 }
 .campos div input{
   height: 50px;
-  width: 130px;
+  width: 100%;
   padding: 5px 10px;
   outline: none;
   font-size: 30px;
@@ -39,8 +43,6 @@
    -moz-appearance: textfield;
    appearance: textfield;
 }
-
-
 .arrow{
   background-color: #854CFF;
   border: none;
@@ -51,10 +53,27 @@
   padding: 15px;
   border-radius: 50%;
   align-self: flex-start;
+  position: absolute;
+  right: 10px;
+  top: 140px;
 }
 .mudaLabelDia{
   color: #FF5757;
 }
 .mudaInputDia{
   border: 1px solid #FF5757;
+}
+.result{
+  margin: auto;
+  background-color: violet;
+  width: 90%;
+  margin-top: 100px;
+}
+.result h2{
+  margin-left: 30%;
+  font-size: 8vw;
+}
+.result h2 span{
+  color: #854CFF;
+  font-size: 10vw;
 }
