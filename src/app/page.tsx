@@ -12,6 +12,9 @@ export default function Home() {
   const [d, setD] = useState<number | string>(0)
   const [m, setM] = useState<number | string>(0)
   const [a, setA] = useState<number | string>(0)
+  const [ dayRed, setDayRed ] = useState(false)
+  const [ monthRed, setMonthRed] = useState(false)
+  const [ yearRed, setYearRed] = useState(false)
 
   function exibeResult(dia: any, mes: any, ano: any) {
     const hoje = new Date();
@@ -35,6 +38,11 @@ export default function Home() {
     exibeResult(d, m, a);
   }
 
+  function estiliza(){
+    setDayRed(!dayRed)
+
+  }
+
   return (
     <>
       <Formik
@@ -46,8 +54,11 @@ export default function Home() {
           setM(values.mes);
           setA(values.ano);
           const errors = { dia: "", mes: "", ano: "" };
-          if (resultado[0] !== "OK") { errors.dia = resultado[0]; }
-          if (resultado[1] !== "OK") { errors.mes = resultado[1]; }
+          if (resultado[0] === "OK" || resultado[0] === undefined ) {   setDayRed(false) 
+          }else{ errors.dia = resultado[0];  setDayRed(true)}
+          
+          if (resultado[1] !== "OK") { errors.mes = resultado[1]; 
+          }else{      }
           if (resultado[2] !== "OK") { errors.ano = resultado[2]; }
           return errors;
         }}
@@ -62,8 +73,8 @@ export default function Home() {
               <Form onSubmit={(e) => { executa(e) }} id={styles.mainForm} >
                 <div className={styles.campos}>
                   <div className={styles.day}>
-                    <label htmlFor="dia">Dia</label>
-                    <Field type="number" name="dia" />
+                    <label htmlFor="dia" className={ dayRed ? (styles.mudaLabelDia) : '' }>Dia</label>
+                    <Field type="number" name="dia" className={dayRed ? (styles.mudaInputDia) : styles.mudaInput}/>
                     <ErrorMessage name="dia" component="div" className={styles.erro} />
                   </div>
                   <div className={styles.month}>

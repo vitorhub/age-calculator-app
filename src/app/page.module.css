@@ -3,7 +3,7 @@
   background-color: aqua;
   gap: 10px;
 }
-#mainForm div label{
+#mainForm div div label{
   padding: 5px 10px;
   text-transform: uppercase;
   font-size: 15px;
@@ -32,9 +32,8 @@
   font-size: 15px;
   color: #FF5757;
 }
-.campos div input[type=number]::-webkit-inner-spin-button { 
+.campos div input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
-    
 }
 .campos div input[type=number] { 
    -moz-appearance: textfield;
@@ -52,4 +51,10 @@
   padding: 15px;
   border-radius: 50%;
   align-self: flex-start;
+}
+.mudaLabelDia{
+  color: #FF5757;
+}
+.mudaInputDia{
+  border: 1px solid #FF5757;
 }
