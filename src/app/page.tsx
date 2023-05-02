@@ -15,7 +15,6 @@ export default function Home() {
   const [dayRed, setDayRed] = useState(false)
   const [monthRed, setMonthRed] = useState(false)
   const [yearRed, setYearRed] = useState(false)
-  const [err, setErrors] = useState([])
 
   function exibeResult(dia: any, mes: any, ano: any) {
     const hoje = new Date();
@@ -60,7 +59,6 @@ export default function Home() {
             setYearRed(false)
           } else { errors.ano = resultado[2]; setYearRed(true) }
 
-          setErrors(errors)
           return errors;
         }}
         onSubmit={(values) => {
