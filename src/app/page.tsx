@@ -15,6 +15,7 @@ export default function Home() {
   const [dayRed, setDayRed] = useState(false)
   const [monthRed, setMonthRed] = useState(false)
   const [yearRed, setYearRed] = useState(false)
+  const [err, setErrors] = useState([])
 
   function exibeResult(dia: any, mes: any, ano: any) {
     const hoje = new Date();
@@ -28,19 +29,14 @@ export default function Home() {
     let anos = Math.trunc(calcmes / 12)
     let meses = calcmes - (anos * 12)
     let dias = today
-    setAnos(anos)
-    setMeses(meses)
-    setDias(dias)
+      setAnos(anos)
+      setMeses(meses)
+      setDias(dias)
   }
 
   function executa(e: any) {
     e.preventDefault();
     exibeResult(d, m, a);
-  }
-
-  function estiliza() {
-    setDayRed(!dayRed)
-
   }
 
   return (
@@ -57,11 +53,14 @@ export default function Home() {
           if (resultado[0] === "OK" || resultado[0] === undefined) {
             setDayRed(false)
           } else { errors.dia = resultado[0]; setDayRed(true) }
+          if (resultado[1] === "OK" || resultado[1] === undefined) {
+            setMonthRed(false)
+          } else { errors.mes = resultado[1]; setMonthRed(true) }
+          if (resultado[2] === "OK" || resultado[2] === undefined) {
+            setYearRed(false)
+          } else { errors.ano = resultado[2]; setYearRed(true) }
 
-          if (resultado[1] !== "OK") {
-            errors.mes = resultado[1];
-          } else { }
-          if (resultado[2] !== "OK") { errors.ano = resultado[2]; }
+          setErrors(errors)
           return errors;
         }}
         onSubmit={(values) => {
@@ -76,17 +75,20 @@ export default function Home() {
                 <div className={styles.campos}>
                   <div className={styles.day}>
                     <label htmlFor="dia" className={dayRed ? (styles.mudaLabelDia) : ''}>Dia</label>
-                    <Field type="number" name="dia" className={dayRed ? (styles.mudaInputDia) : styles.mudaInput} />
+                    <Field type="number" name="dia" 
+                    className={dayRed ? (styles.mudaInputDia) : styles.mudaInput} placeholder="DD" />
                     <ErrorMessage name="dia" component="div" className={styles.erro} />
                   </div>
                   <div className={styles.month}>
-                    <label htmlFor="mes">Mes</label>
-                    <Field type="number" name="mes" />
+                    <label htmlFor="mes" className={monthRed ? (styles.mudaLabelMes) : ''} >Mes</label>
+                    <Field type="number" name="mes" 
+                    className={monthRed ? (styles.mudaInputMes) : ''} placeholder="MM" />
                     <ErrorMessage name="mes" component="div" className={styles.erro} />
                   </div>
                   <div className={styles.year}>
-                    <label htmlFor="ano">Ano</label>
-                    <Field type="number" name="ano" />
+                    <label htmlFor="ano" className={yearRed ? (styles.mudaLabelAno) : ''} >Ano</label>
+                    <Field type="number" name="ano" 
+                    className={yearRed ? (styles.mudaInputAno) : ''} placeholder="YYYY" />
                     <ErrorMessage name="ano" component="div" className={styles.erro} />
                   </div>
                 </div>
